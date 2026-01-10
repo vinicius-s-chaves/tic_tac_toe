@@ -1,21 +1,21 @@
-class Game
-  @@board = [%w[a1 a2 a3], %w[b1 b2 b3], %w[c1 c2 c3]]
+require_relative 'game/board'
+require_relative 'game/player'
 
-  def self.board
-    @@board.each do |row|
-      row
-    end
+class Game
+  attr_accessor :p1, :p2
+
+  def self.start
+    @@status = 'in_game'
+
+    @p1 = Player.new(self.choose)
+    @p2 = Player.new(self.choose)
   end
-  
-  def self.play(place, player)
-    @@board = @@board.map do |row|
-      row.map do |column|
-        if column == place
-          column = player.char
-        else
-          column = column
-        end
-      end
-    end
+
+  private
+
+  def self.choose
+      puts "Choose your char (x/o)"
+      char = gets.chomp.downcase
+      char
   end
 end
