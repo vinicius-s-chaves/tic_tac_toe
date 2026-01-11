@@ -2,6 +2,12 @@ class Board
   @@board = [%w[a1 a2 a3], %w[b1 b2 b3], %w[c1 c2 c3]]
 
   def self.display
+    @@board.each do |row|
+      puts "#{row}"
+    end
+  end
+
+  def self.board
     @@board
   end
   
@@ -22,12 +28,12 @@ class Board
 
     for i in (0..2)
       column = []
-      self.display.each do |row|
+      self.board.each do |row|
         row.each_with_index do |space, index|
-          column.push(space) if index == i
+          column << space if index == i
         end
       end
-      board_by_column.push(column)
+      board_by_column << column
     end
 
     board_by_column

@@ -34,14 +34,14 @@ class Game
   
   def self.space
     puts "Choose a space:"
-    p Board.display
+    Board.display
     space = gets.chomp
     space
   end
 
   def self.status
     initial_board = [%w[a1 a2 a3], %w[b1 b2 b3], %w[c1 c2 c3]].flatten
-    current_board = Board.display
+    current_board = Board.board
 
     self.draw?(initial_board, current_board)
     self.row_win?(current_board)
