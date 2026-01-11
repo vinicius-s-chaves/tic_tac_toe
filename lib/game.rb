@@ -43,12 +43,29 @@ class Game
     initial_board = [%w[a1 a2 a3], %w[b1 b2 b3], %w[c1 c2 c3]].flatten
     current_board = Board.display
 
+    self.draw?(initial_board, current_board)
+    self.row_win?(current_board)
+    self.column_win?
+  end
+
+  def self.draw?(initial_board, current_board)
     if initial_board - current_board.flatten == initial_board
       @@status = 'draw'
     end
+  end
 
+  def self.row_win?(current_board)
     current_board.each do |row|
       if row.uniq == ['x'] || row.uniq == ['o']
+        @@status = 'winner'
+        break
+      end
+    end
+  end
+
+  def self.column_win?
+    Board.column.each do |column|
+      if column.uniq == ['x'] || column.uniq == ['o']
         @@status = 'winner'
       end
     end
