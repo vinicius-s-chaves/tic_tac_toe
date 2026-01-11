@@ -16,4 +16,20 @@ class Board
       end
     end
   end
+
+  def self.column
+    board_by_column = []
+
+    for i in (0..2)
+      column = []
+      self.display.each do |row|
+        row.each_with_index do |space, index|
+          column.push(space) if index == i
+        end
+      end
+      board_by_column.push(column)
+    end
+
+    board_by_column
+  end
 end
