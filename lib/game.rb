@@ -11,7 +11,9 @@ class Game
     @p2 = Player.new(self.set_char)
 
     while @@status == 'in_game'
-      self.round
+      self.round(@p1)
+      break if @@status != 'in_game'
+      self.round(@p2)
     end
   end
 
@@ -23,12 +25,11 @@ class Game
     char
   end
 
-  def self.round
-    print "Player 1: "
-    Board.play(self.space, @p1)
+  def self.round(player)
+    print "Player #{player}: "
+    Board.play(self.space, player)
 
-    print "Player 2: "
-    Board.play(self.space, @p2)
+    self.status
   end
   
   def self.space
@@ -36,5 +37,20 @@ class Game
     p Board.display
     space = gets.chomp
     space
+  end
+
+  def self.status
+    initial_board = [%w[a1 a2 a3], %w[b1 b2 b3], %w[c1 c2 c3]].flatten
+    current_board = Board.display
+
+    if initial_board - current_board.flatten == initial_board
+      @@status = 'draw'
+    end
+
+    current_board.each do |row|
+      if row.uniq == ['x'] || row.uniq == ['o']
+        @@status = 'winner'
+      end
+    end
   end
 end
