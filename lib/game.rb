@@ -46,6 +46,7 @@ class Game
     self.draw?(initial_board, current_board)
     self.row_win?(current_board)
     self.column_win?
+    self.diagonal_win?(current_board)
   end
 
   def self.draw?(initial_board, current_board)
@@ -54,8 +55,8 @@ class Game
     end
   end
 
-  def self.row_win?(current_board)
-    current_board.each do |row|
+  def self.row_win?(board)
+    board.each do |row|
       if row.uniq == ['x'] || row.uniq == ['o']
         @@status = 'winner'
         break
@@ -68,6 +69,16 @@ class Game
       if column.uniq == ['x'] || column.uniq == ['o']
         @@status = 'winner'
       end
+    end
+  end
+
+  def self.diagonal_win?(board)
+    if board.all? { |row| row.include?('x') }
+      @@status = 'winner' if Board.diagonal.uniq == ['x']
+    end
+    
+    if board.all? { |row| row.include?('o') }
+      @@status = 'winner' if Board.diagonal.uniq == ['o']
     end
   end
 end

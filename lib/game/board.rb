@@ -25,7 +25,6 @@ class Board
 
   def self.column
     board_by_column = []
-
     for i in (0..2)
       column = []
       self.board.each do |row|
@@ -35,7 +34,26 @@ class Board
       end
       board_by_column << column
     end
-
     board_by_column
+  end
+
+  def self.diagonal
+    board_diagonal = []
+    # left to right
+    self.board.each_with_index do |row, row_index|
+      board_diagonal <<
+      row.select do |column|
+        row.index(column) == row_index
+      end
+    end
+    # right to left
+    # self.board.each_with_index do |row, row_index|
+    #   board_diagonal <<
+    #   row.select do |column|
+    #     row.index(column) == (row.index(row.last) - row_index)
+    #   end
+    # end
+      
+    board_diagonal.flatten
   end
 end
