@@ -73,12 +73,10 @@ class Game
   end
 
   def self.diagonal_win?(board)
-    if board.all? { |row| row.include?('x') }
-      @@status = 'winner' if Board.diagonal.uniq == ['x']
+    if Board.diagonal.any? do |diagonal|
+      diagonal.uniq == ['x'] || diagonal.uniq == ['o']
     end
-    
-    if board.all? { |row| row.include?('o') }
-      @@status = 'winner' if Board.diagonal.uniq == ['o']
+      @@status = 'winner'
     end
   end
 end

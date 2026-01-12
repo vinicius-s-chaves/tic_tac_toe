@@ -38,22 +38,32 @@ class Board
   end
 
   def self.diagonal
-    board_diagonal = []
-    # left to right
+    board_by_diagonal = []
+    diagonal_by_left = (diagonal_left(Array.new))
+    diagonal_by_right = (diagonal_right(Array.new))
+    board_by_diagonal << diagonal_by_left
+    board_by_diagonal << diagonal_by_right
+    
+    board_by_diagonal
+  end
+
+  def self.diagonal_left(board_diagonal)
     self.board.each_with_index do |row, row_index|
       board_diagonal <<
       row.select do |column|
         row.index(column) == row_index
       end
     end
-    # right to left
-    # self.board.each_with_index do |row, row_index|
-    #   board_diagonal <<
-    #   row.select do |column|
-    #     row.index(column) == (row.index(row.last) - row_index)
-    #   end
-    # end
-      
+    board_diagonal.flatten
+  end
+
+  def self.diagonal_right(board_diagonal)
+    self.board.each_with_index do |row, row_index|
+      board_diagonal <<
+      row.select do |column|
+        row.index(column) == (row.index(row.last) - row_index)
+      end
+    end
     board_diagonal.flatten
   end
 end
