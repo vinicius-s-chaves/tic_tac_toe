@@ -2,16 +2,16 @@ require_relative 'game/board'
 require_relative 'game/player'
 
 class Game
-  attr_accessor :p1, :p2
+  @@initial_board = [%w[a1 a2 a3], %w[b1 b2 b3], %w[c1 c2 c3]].flatten
+  @@p1 = Player.new('x', "Player 1")
+  @@p2 = Player.new('o', "Player 2")
+  @@status = 'in_game'
   
   def self.start
-    @@status = 'in_game'
-    @p1 = Player.new('x', "Player 1")
-    @p2 = Player.new('o', "Player 2")
     while @@status == 'in_game'
-      self.round(@p1)
+      self.round(@@p1)
       break if @@status != 'in_game'
-      self.round(@p2)
+      self.round(@@p2)
     end
   end
 
@@ -31,9 +31,8 @@ class Game
   end
 
   def self.status
-    initial_board = [%w[a1 a2 a3], %w[b1 b2 b3], %w[c1 c2 c3]].flatten
     current_board = Board.board
-    self.draw?(initial_board, current_board)
+    self.draw?(@@initial_board, current_board)
     self.row_win?(current_board)
     self.column_win?
     self.diagonal_win?(current_board)
