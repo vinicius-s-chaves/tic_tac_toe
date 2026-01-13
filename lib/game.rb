@@ -2,10 +2,11 @@ require_relative 'game/board'
 require_relative 'game/player'
 
 class Game
-  @@initial_board = [%w[1 2 3], %w[4 5 6], %w[7 8 9]].flatten
-  @@p1 = Player.new('x', "Player 1")
-  @@p2 = Player.new('o', "Player 2")
-  @@status = 'in_game'
+  def initialize
+    @p1 = Player.new('x', "Player 1")
+    @p2 = Player.new('o', "Player 2")
+    @board = Board.new
+  end
   
   def self.start
     while @@status == 'in_game'
