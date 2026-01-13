@@ -6,10 +6,8 @@ class Game
   
   def self.start
     @@status = 'in_game'
-
-    @p1 = Player.new(self.set_char)
-    @p2 = Player.new(self.set_char)
-
+    @p1 = Player.new('x', "Player 1")
+    @p2 = Player.new('o', "Player 2")
     while @@status == 'in_game'
       self.round(@p1)
       break if @@status != 'in_game'
@@ -19,16 +17,9 @@ class Game
 
   private
 
-  def self.set_char
-    puts "Choose your char (x/o)"
-    char = gets.chomp.downcase
-    char
-  end
-
   def self.round(player)
-    print "Player #{player}: "
+    print "#{player.name} (#{player.char}): "
     Board.play(self.space, player)
-
     self.status
   end
   
@@ -42,7 +33,6 @@ class Game
   def self.status
     initial_board = [%w[a1 a2 a3], %w[b1 b2 b3], %w[c1 c2 c3]].flatten
     current_board = Board.board
-
     self.draw?(initial_board, current_board)
     self.row_win?(current_board)
     self.column_win?
