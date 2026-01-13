@@ -1,9 +1,11 @@
 class Board
-  @@board = [%w[a1 a2 a3], %w[b1 b2 b3], %w[c1 c2 c3]]
+  @@board = [%w[1 2 3], %w[4 5 6], %w[7 8 9]]
 
   def self.display
+    puts ""
     @@board.each do |row|
-      puts "#{row}"
+      puts row.join("|")
+      puts "-----" unless row == @@board.last
     end
   end
 

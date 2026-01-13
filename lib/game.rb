@@ -2,7 +2,7 @@ require_relative 'game/board'
 require_relative 'game/player'
 
 class Game
-  @@initial_board = [%w[a1 a2 a3], %w[b1 b2 b3], %w[c1 c2 c3]].flatten
+  @@initial_board = [%w[1 2 3], %w[4 5 6], %w[7 8 9]].flatten
   @@p1 = Player.new('x', "Player 1")
   @@p2 = Player.new('o', "Player 2")
   @@status = 'in_game'
