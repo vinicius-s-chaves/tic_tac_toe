@@ -1,16 +1,16 @@
 class Board
-  @@board = [%w[1 2 3], %w[4 5 6], %w[7 8 9]]
+  attr_accessor :board
+
+  def initialize
+    @board = [%w[1 2 3], %w[4 5 6], %w[7 8 9]]
+  end
 
   def self.display
     puts ""
-    @@board.each do |row|
+    board.each do |row|
       puts row.join("|")
-      puts "-----" unless row == @@board.last
+      puts "-----" unless row == board.last
     end
-  end
-
-  def self.board
-    @@board
   end
   
   def self.play(place, player)
