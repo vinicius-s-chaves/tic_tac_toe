@@ -48,7 +48,7 @@ class Game
     board.each do |row|
       if row.uniq == ['x'] || row.uniq == ['o']
         @@status = 'winner'
-        break
+        self.winner = row.uniq
       end
     end
   end
@@ -57,15 +57,22 @@ class Game
     Board.column.each do |column|
       if column.uniq == ['x'] || column.uniq == ['o']
         @@status = 'winner'
+        self.winner = column.uniq
       end
     end
   end
 
   def self.diagonal_win?(board)
-    if Board.diagonal.any? do |diagonal|
-      diagonal.uniq == ['x'] || diagonal.uniq == ['o']
+    Board.diagonal.each do |diagonal|
+      if diagonal.uniq == ['x'] || diagonal.uniq == ['o']
+        @@status = 'winner'
+        self.winner = diagonal.uniq
+      end
     end
-      @@status = 'winner'
-    end
+  end
+
+  def self.winner=(line)
+    Board.display
+    puts "#{line.pop.upcase} WINS!"
   end
 end

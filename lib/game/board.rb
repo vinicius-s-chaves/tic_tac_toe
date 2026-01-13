@@ -14,10 +14,9 @@ class Board
   def self.play(place, player)
     @@board = @@board.map do |row|
       row.map do |column|
-        if column == place
-          column = player.char
-        else
-          column = column
+        case column
+        when place then column = player.char
+        else column = column
         end
       end
     end
