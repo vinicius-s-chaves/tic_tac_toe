@@ -6,33 +6,34 @@ class Game
     @p1 = Player.new('x', "Player 1")
     @p2 = Player.new('o', "Player 2")
     @board = Board.new
+    @current_player = @p1
+
+    self.start
   end
   
-  def self.start
-    while @@status == 'in_game'
-      self.round(@@p1)
-      break if @@status != 'in_game'
-      self.round(@@p2)
+  private
+
+  def start
+    until false
+      round(@current_player)
+      switch_player!
     end
   end
 
-  private
-
-  def self.round(player)
+  def round(player)
     print "#{player.name} (#{player.char}): "
-    Board.play(self.space, player)
-    self.status
+    @board.play(self.space, player)
   end
   
-  def self.space
+  def space
     puts "Choose a space:"
-    Board.display
-    space = gets.chomp
+    @board.display
+    space = gets.chomp.to_i
     space
   end
 
-  def self.status
-    current_board = Board.board
+  def status
+    current_board = @board.board
     self.draw?(@@initial_board, current_board)
     self.row_win?(current_board)
     self.column_win?
@@ -70,6 +71,10 @@ class Game
         self.winner = diagonal.uniq
       end
     end
+  end
+
+  def switch_player!
+    @current_player = @current_player == @p1 ? @p2 : @p1
   end
 
   def self.winner=(line)
