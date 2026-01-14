@@ -30,6 +30,10 @@ class Game
     puts "Choose a space:"
     @board.display
     space = gets.chomp.to_i
+    unless @board.board.any? { |row| row.include?(space) }
+      puts "\nChoose a valid space!"
+      round(@current_player)
+    end
     space
   end
 
