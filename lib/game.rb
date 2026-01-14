@@ -6,7 +6,7 @@ class Game
     @p1 = Player.new('x', "Player 1")
     @p2 = Player.new('o', "Player 2")
     @board = Board.new
-    @current_player = @p1
+    @current_player = @p2
 
     self.start
   end
@@ -14,9 +14,9 @@ class Game
   private
 
   def start
-    until false
-      round(@current_player)
+    until win?
       switch_player!
+      round(@current_player)
     end
   end
 
@@ -32,45 +32,25 @@ class Game
     space
   end
 
-  def status
-    current_board = @board.board
-    self.draw?(@@initial_board, current_board)
-    self.row_win?(current_board)
-    self.column_win?
-    self.diagonal_win?(current_board)
+  def win?
+    rows? ||
+    columns? ||
+    diagonals?
   end
 
-  def self.draw?(initial_board, current_board)
-    if initial_board - current_board.flatten == initial_board
-      @@status = 'draw'
+  def rows?
+    @board.board.any? { |row| row.all? { |space| space == @current_player.char } }
+  end
+
+  def columns?
+    (0..2).any? do |index|
+      (0..2).all? { |space| @board.board[space][index] == @current_player.char}
     end
   end
 
-  def self.row_win?(board)
-    board.each do |row|
-      if row.uniq == ['x'] || row.uniq == ['o']
-        @@status = 'winner'
-        self.winner = row.uniq
-      end
-    end
-  end
-
-  def self.column_win?
-    Board.column.each do |column|
-      if column.uniq == ['x'] || column.uniq == ['o']
-        @@status = 'winner'
-        self.winner = column.uniq
-      end
-    end
-  end
-
-  def self.diagonal_win?(board)
-    Board.diagonal.each do |diagonal|
-      if diagonal.uniq == ['x'] || diagonal.uniq == ['o']
-        @@status = 'winner'
-        self.winner = diagonal.uniq
-      end
-    end
+  def diagonals?
+    (0..2).all? { |index| @board.board[index][index] == @current_player.char} ||
+    (0..2).all? { |index| @board.board[index][2 - index] == @current_player.char}
   end
 
   def switch_player!
@@ -78,7 +58,7 @@ class Game
   end
 
   def self.winner=(line)
-    Board.display
+    @board.display
     puts "#{line.pop.upcase} WINS!"
   end
 end
