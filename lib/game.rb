@@ -18,6 +18,7 @@ class Game
       switch_player!
       round(@current_player)
     end
+    winner
   end
 
   def round(player)
@@ -57,8 +58,8 @@ class Game
     @current_player = @current_player == @p1 ? @p2 : @p1
   end
 
-  def self.winner=(line)
+  def winner
     @board.display
-    puts "#{line.pop.upcase} WINS!"
+    puts "#{@current_player.name} WINS!"
   end
 end

@@ -5,8 +5,4 @@ class Player
       @char = char
       @name = name
   end
-
-  def to_s
-    self.char.split('').last
-  end
 end
