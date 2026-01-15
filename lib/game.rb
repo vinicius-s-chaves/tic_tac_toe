@@ -17,6 +17,11 @@ class Game
     until win?
       switch_player!
       round(@current_player)
+      if draw?
+        @board.display
+        puts "It's a draw!"
+        break
+      end
     end
     winner
   end
@@ -35,6 +40,11 @@ class Game
       round(@current_player)
     end
     space
+  end
+
+  def draw?
+    initial_board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    initial_board - @board.board.flatten == initial_board
   end
 
   def win?
@@ -63,7 +73,9 @@ class Game
   end
 
   def winner
-    @board.display
-    puts "#{@current_player.name} WINS!"
+    unless draw?
+      @board.display
+      puts "#{@current_player.name} WINS!"
+    end
   end
 end
